@@ -7,8 +7,8 @@ import (
 
 type EntityStoreEmployee struct {
 	ID       string             `json:"id" gorm:"primaryKey"`
-	Store    EntityStore        `json:"store_id" gorm:"foreignKey:StoreID; not null" validate:"required"`
-	User     entity.EntityUser  `json:"user_id" gorm:"foreignKey:UserID; not null" validate:"required"`
+	Store    EntityStore        `json:"store_id" gorm:"foreignKey:StoreID; not null; index:idx_unique" validate:"required"`
+	User     entity.EntityUser  `json:"user_id" gorm:"foreignKey:UserID; not null; index:idx_unique" validate:"required"`
 	Group    entity.EntityGroup `json:"group_id" gorm:"foreignKey:GroupID"`
 	IsActive bool               `json:"is_active" gorm:"default:true"`
 }

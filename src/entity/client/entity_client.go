@@ -11,9 +11,9 @@ var validate *validator.Validate = validator.New()
 
 type EntityClient struct {
 	ID    string                   `json:"id" gorm:"primaryKey"`
-	CPF   string                   `json:"cpf" gorm:"unique;not null" validate:"required"`
+	CPF   string                   `json:"cpf" gorm:"index:idx_unique;not null" validate:"required"`
 	Name  string                   `json:"name" validate:"required" gorm:"not null"`
-	Store entity_store.EntityStore `json:"store_id" gorm:"foreignKey:StoreID; not null" validate:"required"`
+	Store entity_store.EntityStore `json:"store_id" gorm:"foreignKey:StoreID; not null; index:idx_unique" validate:"required"`
 }
 
 func CreateClient(clientParam EntityClient) (*EntityClient, error) {

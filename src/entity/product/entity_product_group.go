@@ -11,8 +11,8 @@ var validate *validator.Validate = validator.New()
 
 type EntityProductGroup struct {
 	ID    string                   `json:"id" gorm:"primaryKey"`
-	Store entity_store.EntityStore `json:"store_id" gorm:"foreignKey:StoreID; not null"`
-	Name  string                   `json:"name" gorm:"not null" validate:"required"`
+	Store entity_store.EntityStore `json:"store_id" gorm:"foreignKey:StoreID; not null; index:idx_unique"`
+	Name  string                   `json:"name" gorm:"not null; index:idx_unique" validate:"required"`
 }
 
 func CreateProductGroup(productGroupParams EntityProductGroup) (*EntityProductGroup, error) {

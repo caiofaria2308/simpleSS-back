@@ -7,9 +7,9 @@ import (
 
 type EntityProduct struct {
 	ID          string                   `json:"id" gorm:"primaryKey"`
-	Store       entity_store.EntityStore `json:"store_id" gorm:"foreignKey:StoreID; not null" validate:"required"`
+	Store       entity_store.EntityStore `json:"store_id" gorm:"foreignKey:StoreID; not null; idx_unique" validate:"required"`
 	Group       EntityProductGroup       `json:"group_id" gorm:"foreignKey:GroupID; not null" validate:"required"`
-	BarCode     string                   `json:"bar_code" gorm:"unique; not null" validate:"required"`
+	BarCode     string                   `json:"bar_code" gorm:"idx_unique; not null" validate:"required"`
 	Name        string                   `json:"name" gorm:"not null" validate:"required"`
 	Price       float64                  `json:"price" gorm:"not null" validate:"required"`
 	MaxDiscount float64                  `json:"max_discount" gorm:"not null; default:0.0" validate:"required"`
