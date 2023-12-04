@@ -2,6 +2,7 @@ package utils
 
 import (
 	"strings"
+	"time"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
@@ -52,4 +53,9 @@ func GenerateSlug(s string) string {
 	slug := strings.ReplaceAll(s, " ", "-")
 	slug = strings.ToLower(slug)
 	return slug
+}
+
+func GenerateNumber(date time.Time) string {
+	// return date formatted as a string with the following format: YYYYMMDDHHMMSS
+	return date.Format("20060102150405")
 }
