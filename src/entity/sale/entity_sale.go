@@ -12,11 +12,12 @@ import (
 var validate *validator.Validate = validator.New()
 
 type EntitySale struct {
-	ID     string                     `json:"id" gorm:"primaryKey"`
-	Date   time.Time                  `json:"date" gorm:"not null"`
-	Number string                     `json:"number" gorm:"unique; not null"`
-	Store  entity_store.EntityStore   `json:"store_id" gorm:"foreignKey:StoreID; not null" validate:"required"`
-	Client entity_client.EntityClient `json:"client_id" gorm:"foreignKey:ClientID"`
+	ID       string                           `json:"id" gorm:"primaryKey"`
+	Date     time.Time                        `json:"date" gorm:"not null"`
+	Number   string                           `json:"number" gorm:"unique; not null"`
+	Store    entity_store.EntityStore         `json:"store_id" gorm:"foreignKey:StoreID; not null" validate:"required"`
+	Client   entity_client.EntityClient       `json:"client_id" gorm:"foreignKey:ClientID"`
+	Employee entity_store.EntityStoreEmployee `json:"employee_id" gorm:"foreignKey:EmployeeID; not null" validate:"required"`
 }
 
 func CreateSale(saleParams EntitySale) (*EntitySale, error) {
