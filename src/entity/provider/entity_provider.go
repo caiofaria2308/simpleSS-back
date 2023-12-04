@@ -1,23 +1,30 @@
 package entity
 
-import "github.com/go-playground/validator/v10"
+import (
+	entity_store "main/entity/store"
+	"main/utils"
+
+	"github.com/go-playground/validator/v10"
+)
 
 var validate *validator.Validate = validator.New()
 
 type EntityProvider struct {
-	ID                string `json:"id" gorm:"primaryKey"`
-	SocialReason      string `json:"social_reason" validate:"required" gorm:"not null"`
-	BusinessName      string `json:"business_name" validate:"required" gorm:"not null"`
-	AddressState      string `json:"address_state"`
-	AddressCity       string `json:"address_city"`
-	AddressZipCode    string `json:"address_zip_code"`
-	AddressStreet     string `json:"address_street"`
-	AddressNumber     string `json:"address_number"`
-	AddressComplement string `json:"address_complement"`
+	ID                string                   `json:"id" gorm:"primaryKey"`
+	Store             entity_store.EntityStore `json:"store_id" gorm:"foreignKey:StoreID; not null" validate:"required"`
+	SocialReason      string                   `json:"social_reason" validate:"required" gorm:"not null"`
+	BusinessName      string                   `json:"business_name" validate:"required" gorm:"not null"`
+	AddressState      string                   `json:"address_state"`
+	AddressCity       string                   `json:"address_city"`
+	AddressZipCode    string                   `json:"address_zip_code"`
+	AddressStreet     string                   `json:"address_street"`
+	AddressNumber     string                   `json:"address_number"`
+	AddressComplement string                   `json:"address_complement"`
 }
 
 func CreateProvider(providerParams EntityProvider) (*EntityProvider, error) {
 	provider := &EntityProvider{
+		ID:                utils.GenerateID(),
 		SocialReason:      providerParams.SocialReason,
 		BusinessName:      providerParams.BusinessName,
 		AddressState:      providerParams.AddressState,
