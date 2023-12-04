@@ -7,14 +7,14 @@ import (
 
 type EntityStore struct {
 	ID                string           `json:"id" gorm:"primary_key"`
-	CNPJ              string           `json:"cnpj" validate:"required"`
-	Chain             EntityStoreChain `json:"chain" gorm:"foreignKey:ChainID"`
-	SocialReason      string           `json:"social_reason" validate:"required"`
-	BusinessName      string           `json:"business_name" validate:"required"`
+	CNPJ              string           `json:"cnpj" validate:"required" gorm:"not null; unique"`
+	Chain             EntityStoreChain `json:"chain" gorm:"foreignKey:ChainID; not null" validate:"required"`
+	SocialReason      string           `json:"social_reason" validate:"required" gorm:"not null"`
+	BusinessName      string           `json:"business_name" validate:"required" gorm:"not null"`
 	AddressState      string           `json:"address_state"`
 	AddressCity       string           `json:"address_city"`
 	AddressZipCode    string           `json:"address_zip_code"`
-	Address           string           `json:"address"`
+	AddressStreet     string           `json:"address_street"`
 	AddressNumber     string           `json:"address_number"`
 	AddressComplement string           `json:"address_complement"`
 	CreatedAt         time.Time        `json:"created_at"`
@@ -31,7 +31,7 @@ func CreateStore(storeParams EntityStore) (*EntityStore, error) {
 		AddressState:      storeParams.AddressState,
 		AddressCity:       storeParams.AddressCity,
 		AddressZipCode:    storeParams.AddressZipCode,
-		Address:           storeParams.Address,
+		AddressStreet:     storeParams.AddressStreet,
 		AddressNumber:     storeParams.AddressNumber,
 		AddressComplement: storeParams.AddressComplement,
 		CreatedAt:         time.Now(),

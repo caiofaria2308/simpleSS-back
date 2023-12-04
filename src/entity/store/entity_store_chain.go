@@ -11,7 +11,7 @@ var validate *validator.Validate = validator.New()
 
 type EntityStoreChain struct {
 	ID        string    `json:"id" gorm:"primaryKey"`
-	Name      string    `json:"name" gorm:"unique;not null"`
+	Name      string    `json:"name" gorm:"unique;not null" validate:"required"`
 	Active    bool      `json:"active" gorm:"default:true"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
