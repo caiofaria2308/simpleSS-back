@@ -27,3 +27,7 @@ func CreateStoreEmployee(storeEmployeeParams EntityStoreEmployee) (*EntityStoreE
 func (s *EntityStoreEmployee) Validate() error {
 	return validate.Struct(s)
 }
+
+func VerifyStoreEmployeeIsActive(storeEmployee *EntityStoreEmployee) bool {
+	return storeEmployee.IsActive
+}

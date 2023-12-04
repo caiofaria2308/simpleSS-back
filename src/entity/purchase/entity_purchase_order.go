@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"errors"
 	entity_provider "main/entity/provider"
 	entity_store "main/entity/store"
 	"main/utils"
@@ -21,6 +22,9 @@ type EntityPurchaseOrder struct {
 }
 
 func CreatePurchaseOrder(purchaseOrderParams EntityPurchaseOrder) (*EntityPurchaseOrder, error) {
+	if entity_store.VerifyStoreEmployeeIsActive(&purchaseOrderParams.Employee) == false {
+		return nil, errors.New("Employee is not active")
+	}
 	p := &EntityPurchaseOrder{
 		ID:       utils.GenerateID(),
 		Number:   utils.GenerateNumber(purchaseOrderParams.Date),

@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"errors"
 	entity_client "main/entity/client"
 	entity_store "main/entity/store"
 	"main/utils"
@@ -21,12 +22,16 @@ type EntitySale struct {
 }
 
 func CreateSale(saleParams EntitySale) (*EntitySale, error) {
+	if entity_store.VerifyStoreEmployeeIsActive(&saleParams.Employee) == false {
+		return nil, errors.New("Employee is not active")
+	}
 	s := &EntitySale{
-		ID:     utils.GenerateID(),
-		Number: utils.GenerateNumber(saleParams.Date),
-		Date:   saleParams.Date,
-		Store:  saleParams.Store,
-		Client: saleParams.Client,
+		ID:       utils.GenerateID(),
+		Number:   utils.GenerateNumber(saleParams.Date),
+		Date:     saleParams.Date,
+		Store:    saleParams.Store,
+		Client:   saleParams.Client,
+		Employee: saleParams.Employee,
 	}
 	return s, nil
 }
