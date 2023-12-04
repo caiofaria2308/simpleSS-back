@@ -20,12 +20,12 @@ func CalculatePrice(saleProduct *EntitySaleProduct) {
 	saleProduct.FullPrice = saleProduct.Product.Price * saleProduct.Quantity
 	if saleProduct.Promotion.ID != "" {
 		saleProduct.Price = saleProduct.FullPrice - (saleProduct.FullPrice * saleProduct.Promotion.Percentage)
-		return
 	} else if saleProduct.Discount > 0 {
 		saleProduct.Price = saleProduct.FullPrice - (saleProduct.FullPrice * saleProduct.Discount)
 	} else {
 		saleProduct.Price = saleProduct.FullPrice
 	}
+	return
 }
 
 func CreateSaleProduct(saleProductParams EntitySaleProduct) (*EntitySaleProduct, error) {
