@@ -7,7 +7,7 @@ import (
 
 type EntityGroup struct {
 	ID          string             `gorm:"primaryKey" json:"id"`
-	Name        string             `gorm:"unique" json:"name"`
+	Name        string             `gorm:"unique; not null" json:"name"`
 	Permissions []EntityPermission `gorm:"many2many:group_permissions;" json:"permissions"`
 	Users       []EntityUser       `gorm:"many2many:user_groups;" json:"users"`
 	CreatedAt   time.Time          `json:"created_at"`

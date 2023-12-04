@@ -6,8 +6,8 @@ import (
 
 type EntityPermission struct {
 	ID    string `json:"id" gorm:"primary_key"`
-	Table string `json:"table" validate:"required"`
-	Name  string `json:"name" validate:"required"`
+	Table string `json:"table" validate:"required" gorm:"not null"`
+	Name  string `json:"name" validate:"required" gorm:" not null"`
 	Slug  string `json:"slug" validate:"required"`
 }
 
