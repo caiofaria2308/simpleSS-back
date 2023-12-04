@@ -18,9 +18,9 @@ func (r *RepositoryStoreEmployee) Create(storeEmployee entity.EntityStoreEmploye
 	return &storeEmployee, nil
 }
 
-func (r *RepositoryStoreEmployee) GetAll() (*[]entity.EntityStoreEmployee, error) {
+func (r *RepositoryStoreEmployee) GetAll(store_id string) (*[]entity.EntityStoreEmployee, error) {
 	var storeEmployees []entity.EntityStoreEmployee
-	err := r.DB.Find(&storeEmployees).Error
+	err := r.DB.Where("store.id =?", store_id).Joins("Store").Find(&storeEmployees).Error
 	if err != nil {
 		return nil, err
 	}
@@ -53,20 +53,20 @@ func (r *RepositoryStoreEmployee) Delete(id string) error {
 	return nil
 }
 
-func (r *RepositoryStoreEmployee) SearchByUserName(name string) (*[]entity.EntityStoreEmployee, error) {
-	var storeEmployees []entity.EntityStoreEmployee
-	err := r.DB.Where("users.name LIKE ?", "%"+name+"%").Joins("Users").Find(&storeEmployees).Error
+func (r *RepositoryStoreEmployee) SearchByUserName(store_id string, name string) (storeEmployees *[]entity.EntityStoreEmployee, err error) {
+	storeEmployees, err = r.GetAll(store_id)
+	err = r.DB.Where("user.name LIKE ?", "%"+name+"%").Joins("User").Find(&storeEmployees).Error
 	if err != nil {
 		return nil, err
 	}
-	return &storeEmployees, nil
+	return storeEmployees, nil
 }
 
-func (r *RepositoryStoreEmployee) SearchByEmail(email string) (*[]entity.EntityStoreEmployee, error) {
-	var storeEmployees []entity.EntityStoreEmployee
-	err := r.DB.Where("users.email LIKE ?", "%"+email+"%").Joins("Users").Find(&storeEmployees).Error
+func (r *RepositoryStoreEmployee) SearchByEmail(store_id string, email string) (storeEmployees *[]entity.EntityStoreEmployee, err error) {
+	storeEmployees, err = r.GetAll(store_id)
+	err = r.DB.Where("user.email LIKE ?", "%"+email+"%").Joins("User").Find(&storeEmployees).Error
 	if err != nil {
 		return nil, err
 	}
-	return &storeEmployees, nil
+	return storeEmployees, nil
 }
