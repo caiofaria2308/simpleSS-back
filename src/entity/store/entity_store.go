@@ -8,7 +8,7 @@ import (
 type EntityStore struct {
 	ID                string           `json:"id" gorm:"primary_key"`
 	CNPJ              string           `json:"cnpj" validate:"required" gorm:"not null; unique"`
-	Chain             EntityStoreChain `json:"chain" gorm:"foreignKey:ChainID; not null" validate:"required"`
+	Chain             EntityStoreChain `json:"chain_id" gorm:"foreignKey:ChainID; not null" validate:"required"`
 	SocialReason      string           `json:"social_reason" validate:"required" gorm:"not null"`
 	BusinessName      string           `json:"business_name" validate:"required" gorm:"not null"`
 	AddressState      string           `json:"address_state"`
