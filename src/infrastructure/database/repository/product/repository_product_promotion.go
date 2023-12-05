@@ -27,9 +27,13 @@ func (r *RepositoryProductPromotion) GetAll(store_id string) ([]*entity.EntityPr
 	return productPromotions, nil
 }
 
-func (r *RepositoryProductPromotion) GetByID(id string) (*entity.EntityProductPromotion, error) {
+func (r *RepositoryProductPromotion) GetByID(store_id string, id string) (*entity.EntityProductPromotion, error) {
 	var productPromotion entity.EntityProductPromotion
-	err := r.DB.Where("id =?", id).First(&productPromotion).Error
+	products, err := r.GetAll(store_id)
+	if err != nil {
+		return nil, err
+	}
+	err = r.DB.Where("id =?", id).Find(&products).First(&productPromotion).Error
 	if err != nil {
 		return nil, err
 	}
@@ -44,9 +48,13 @@ func (r *RepositoryProductPromotion) Update(productPromotion entity.EntityProduc
 	return &productPromotion, nil
 }
 
-func (r *RepositoryProductPromotion) Delete(id string) error {
+func (r *RepositoryProductPromotion) Delete(store_id string, id string) error {
 	var productPromotion entity.EntityProductPromotion
-	err := r.DB.Where("id =?", id).Delete(&productPromotion).Error
+	products, err := r.GetAll(store_id)
+	if err != nil {
+		return err
+	}
+	err = r.DB.Where("id =?", id).Find(&products).Delete(&productPromotion).Error
 	if err != nil {
 		return err
 	}

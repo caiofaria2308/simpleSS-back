@@ -27,9 +27,9 @@ func (r *RepositoryProductGroup) GetAll(store_id string) ([]*entity.EntityProduc
 	return productGroups, nil
 }
 
-func (r *RepositoryProductGroup) GetByID(id string) (*entity.EntityProductGroup, error) {
+func (r *RepositoryProductGroup) GetByID(store_id string, id string) (*entity.EntityProductGroup, error) {
 	var productGroup entity.EntityProductGroup
-	err := r.DB.Where("id =?", id).First(&productGroup).Error
+	err := r.DB.Where("store_id = ? and id =?", store_id, id).First(&productGroup).Error
 	if err != nil {
 		return nil, err
 	}
@@ -44,9 +44,9 @@ func (r *RepositoryProductGroup) Update(productGroup entity.EntityProductGroup) 
 	return &productGroup, nil
 }
 
-func (r *RepositoryProductGroup) Delete(id string) error {
+func (r *RepositoryProductGroup) Delete(store_id string, id string) error {
 	var productGroup entity.EntityProductGroup
-	err := r.DB.Where("id =?", id).Delete(&productGroup).Error
+	err := r.DB.Where("store_id = ? and id =?", store_id, id).Delete(&productGroup).Error
 	if err != nil {
 		return err
 	}

@@ -27,9 +27,13 @@ func (r *RepositoryProductStock) GetAll(store_id string) ([]*entity.EntityProduc
 	return productStocks, nil
 }
 
-func (r *RepositoryProductStock) GetByID(id string) (*entity.EntityProductStock, error) {
+func (r *RepositoryProductStock) GetByID(store_id string, id string) (*entity.EntityProductStock, error) {
 	var productStock entity.EntityProductStock
-	err := r.DB.Where("id =?", id).First(&productStock).Error
+	products, err := r.GetAll(store_id)
+	if err != nil {
+		return nil, err
+	}
+	err = r.DB.Where("id =?", id).Find(&products).First(&productStock).Error
 	if err != nil {
 		return nil, err
 	}
@@ -44,9 +48,13 @@ func (r *RepositoryProductStock) Update(productStock entity.EntityProductStock) 
 	return &productStock, nil
 }
 
-func (r *RepositoryProductStock) Delete(id string) error {
+func (r *RepositoryProductStock) Delete(store_id string, id string) error {
 	var productStock entity.EntityProductStock
-	err := r.DB.Where("id =?", id).Delete(&productStock).Error
+	products, err := r.GetAll(store_id)
+	if err != nil {
+		return err
+	}
+	err = r.DB.Where("id =?", id).Find(&products).Delete(&productStock).Error
 	if err != nil {
 		return err
 	}

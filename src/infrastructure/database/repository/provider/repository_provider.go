@@ -27,9 +27,13 @@ func (r *RepositoryProvider) GetAll(store_id string) ([]*entity.EntityProvider, 
 	return providers, nil
 }
 
-func (r *RepositoryProvider) GetByID(id string) (*entity.EntityProvider, error) {
+func (r *RepositoryProvider) GetByID(store_id string, id string) (*entity.EntityProvider, error) {
 	var provider entity.EntityProvider
-	err := r.DB.Where("id =?", id).First(&provider).Error
+	providers, err := r.GetAll(store_id)
+	if err != nil {
+		return nil, err
+	}
+	err = r.DB.Where("id =?", id).Find(&providers).First(&provider).Error
 	if err != nil {
 		return nil, err
 	}
@@ -44,9 +48,13 @@ func (r *RepositoryProvider) Update(provider entity.EntityProvider) (*entity.Ent
 	return &provider, nil
 }
 
-func (r *RepositoryProvider) Delete(id string) error {
+func (r *RepositoryProvider) Delete(store_id string, id string) error {
 	var provider entity.EntityProvider
-	err := r.DB.Where("id =?", id).Delete(&provider).Error
+	providers, err := r.GetAll(store_id)
+	if err != nil {
+		return err
+	}
+	err = r.DB.Where("id =?", id).Find(&providers).Delete(&provider).Error
 	if err != nil {
 		return err
 	}

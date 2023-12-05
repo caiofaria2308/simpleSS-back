@@ -27,9 +27,13 @@ func (r *RepositoryStore) GetAll(chain_id string) (*[]entity.EntityStore, error)
 	return &stores, nil
 }
 
-func (r *RepositoryStore) GetByID(id string) (*entity.EntityStore, error) {
+func (r *RepositoryStore) GetByID(chain_id string, id string) (*entity.EntityStore, error) {
 	var store entity.EntityStore
-	err := r.DB.Where("id =?", id).First(&store).Error
+	stores, err := r.GetAll(chain_id)
+	if err != nil {
+		return nil, err
+	}
+	err = r.DB.Where("id =?", id).Find(&stores).First(&store).Error
 	if err != nil {
 		return nil, err
 	}
@@ -62,8 +66,12 @@ func (r *RepositoryStore) Update(store entity.EntityStore) (*entity.EntityStore,
 	return &store, nil
 }
 
-func (r *RepositoryStore) Delete(store entity.EntityStore) error {
-	err := r.DB.Delete(&store).Error
+func (r *RepositoryStore) Delete(chain_id string, id string) error {
+	stores, err := r.GetAll(chain_id)
+	if err != nil {
+		return err
+	}
+	err = r.DB.Where("id =?", id).Find(&stores).Error
 	if err != nil {
 		return err
 	}

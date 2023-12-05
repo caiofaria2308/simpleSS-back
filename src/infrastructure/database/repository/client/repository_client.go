@@ -27,9 +27,13 @@ func (r *RepositoryClient) GetAll(store_id string) ([]*entity.EntityClient, erro
 	return clients, nil
 }
 
-func (r *RepositoryClient) GetByID(id string) (*entity.EntityClient, error) {
+func (r *RepositoryClient) GetByID(store_id string, id string) (*entity.EntityClient, error) {
 	var client entity.EntityClient
-	err := r.DB.Where("id =?", id).First(&client).Error
+	clients, err := r.GetAll(store_id)
+	if err != nil {
+		return nil, err
+	}
+	err = r.DB.Where("id =?", id).Find(&clients).First(&client).Error
 	if err != nil {
 		return nil, err
 	}
@@ -44,9 +48,13 @@ func (r *RepositoryClient) Update(client entity.EntityClient) (*entity.EntityCli
 	return &client, nil
 }
 
-func (r *RepositoryClient) Delete(id string) (*entity.EntityClient, error) {
+func (r *RepositoryClient) Delete(store_id string, id string) (*entity.EntityClient, error) {
 	var client entity.EntityClient
-	err := r.DB.Where("id =?", id).Delete(&client).Error
+	clients, err := r.GetAll(store_id)
+	if err != nil {
+		return nil, err
+	}
+	err = r.DB.Where("id =?", id).Find(&clients).Delete(&client).Error
 	if err != nil {
 		return nil, err
 	}

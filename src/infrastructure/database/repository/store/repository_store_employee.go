@@ -27,9 +27,13 @@ func (r *RepositoryStoreEmployee) GetAll(store_id string) (*[]entity.EntityStore
 	return &storeEmployees, nil
 }
 
-func (r *RepositoryStoreEmployee) GetByID(id string) (*entity.EntityStoreEmployee, error) {
+func (r *RepositoryStoreEmployee) GetByID(store_id string, id string) (*entity.EntityStoreEmployee, error) {
 	var storeEmployee entity.EntityStoreEmployee
-	err := r.DB.Where("id =?", id).First(&storeEmployee).Error
+	employees, err := r.GetAll(store_id)
+	if err != nil {
+		return nil, err
+	}
+	err = r.DB.Where("id =?", id).Find(&employees).First(&storeEmployee).Error
 	if err != nil {
 		return nil, err
 	}
@@ -44,9 +48,13 @@ func (r *RepositoryStoreEmployee) Update(storeEmployee entity.EntityStoreEmploye
 	return &storeEmployee, nil
 }
 
-func (r *RepositoryStoreEmployee) Delete(id string) error {
+func (r *RepositoryStoreEmployee) Delete(store_id string, id string) error {
 	var storeEmployee entity.EntityStoreEmployee
-	err := r.DB.Where("id =?", id).Delete(&storeEmployee).Error
+	employees, err := r.GetAll(store_id)
+	if err != nil {
+		return err
+	}
+	err = r.DB.Where("id =?", id).Find(&employees).Delete(&storeEmployee).Error
 	if err != nil {
 		return err
 	}
