@@ -1,4 +1,4 @@
-package usecase_storeemployee
+package usecase_store_employee
 
 import entity "main/entity/store"
 

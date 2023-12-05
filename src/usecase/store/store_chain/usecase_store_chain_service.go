@@ -1,4 +1,4 @@
-package usecase_storechain
+package usecase_store_chain
 
 import (
 	entity "main/entity/store"
