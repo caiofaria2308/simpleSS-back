@@ -10,6 +10,10 @@ type RepositoryPurchaseOrderProduct struct {
 	DB *gorm.DB
 }
 
+func NewRepositoryPurchaseOrderProduct(db *gorm.DB) *RepositoryPurchaseOrderProduct {
+	return &RepositoryPurchaseOrderProduct{DB: db}
+}
+
 func (r *RepositoryPurchaseOrderProduct) Create(purchaseOrderProduct entity.EntityPurchaseOrderProduct) (*entity.EntityPurchaseOrderProduct, error) {
 	err := r.DB.Create(&purchaseOrderProduct).Error
 	if err != nil {

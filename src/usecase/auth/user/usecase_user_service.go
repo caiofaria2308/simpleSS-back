@@ -41,7 +41,7 @@ func (s *UseCaseUser) Create(user entity.EntityUser) (*entity.EntityUser, error)
 	if err != nil {
 		return nil, err
 	}
-	return s.repo.CreateUser(user)
+	return s.repo.Create(user)
 }
 
 func (s *UseCaseUser) Update(user entity.EntityUser) (*entity.EntityUser, error) {
@@ -49,10 +49,10 @@ func (s *UseCaseUser) Update(user entity.EntityUser) (*entity.EntityUser, error)
 	if err != nil {
 		return nil, err
 	}
-	return s.repo.UpdateUser(user)
+	return s.repo.Update(user)
 }
 
-func (s *UseCaseUser) Delete(id string) error { return s.repo.DeleteUser(id) }
+func (s *UseCaseUser) Delete(id string) error { return s.repo.Delete(id) }
 
 func (s *UseCaseUser) GetByEmail(email string) (*entity.EntityUser, error) {
 	return s.repo.GetByEmail(email)

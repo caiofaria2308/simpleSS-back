@@ -10,6 +10,10 @@ type RepositoryProvider struct {
 	DB *gorm.DB
 }
 
+func NewRepositoryProvider(db *gorm.DB) *RepositoryProvider {
+	return &RepositoryProvider{DB: db}
+}
+
 func (r *RepositoryProvider) Create(provider entity.EntityProvider) (*entity.EntityProvider, error) {
 	err := r.DB.Create(&provider).Error
 	if err != nil {

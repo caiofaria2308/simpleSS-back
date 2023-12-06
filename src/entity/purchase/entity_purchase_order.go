@@ -13,12 +13,15 @@ import (
 var validate *validator.Validate = validator.New()
 
 type EntityPurchaseOrder struct {
-	ID       string                           `json:"id" gorm:"primaryKey"`
-	Store    entity_store.EntityStore         `json:"store_id" gorm:"foreignKey:StoreID; not null; index:idx_unique"`
-	Number   string                           `json:"number" gorm:"not null; index:idx_unique"`
-	Date     time.Time                        `json:"date" gorm:"not null" validate:"required"`
-	Provider entity_provider.EntityProvider   `json:"provider_id" gorm:"foreignKey: ProviderID" validate:"required"`
-	Employee entity_store.EntityStoreEmployee `json:"employee_id" gorm:"foreignKey:EmployeeID; not null" validate:"required"`
+	ID         string                           `json:"id" gorm:"primaryKey"`
+	StoreID    string                           `json:"store_id" gorm:"index:idx_purchaseorder_unique"`
+	Store      entity_store.EntityStore         `gorm:"not null;"`
+	Number     string                           `json:"number" gorm:"not null; index:idx_purchaseorder_unique"`
+	Date       time.Time                        `json:"date" gorm:"not null" validate:"required"`
+	ProviderID string                           `json:"provider_id" validate:"required"`
+	Provider   entity_provider.EntityProvider   `gorm:"not null;"`
+	EmployeeID string                           `json:"employee_id" validate:"required"`
+	Employee   entity_store.EntityStoreEmployee `gorm:"not null;"`
 }
 
 func CreatePurchaseOrder(purchaseOrderParams EntityPurchaseOrder) (*EntityPurchaseOrder, error) {

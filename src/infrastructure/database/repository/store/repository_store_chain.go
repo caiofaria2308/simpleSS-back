@@ -10,6 +10,10 @@ type RepositoryStoreChain struct {
 	DB *gorm.DB
 }
 
+func NewRepositoryStoreChain(db *gorm.DB) *RepositoryStoreChain {
+	return &RepositoryStoreChain{DB: db}
+}
+
 func (r *RepositoryStoreChain) Create(storeChain entity.EntityStoreChain) (*entity.EntityStoreChain, error) {
 	err := r.DB.Create(&storeChain).Error
 	if err != nil {

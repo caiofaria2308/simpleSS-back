@@ -10,6 +10,10 @@ type RepositorySaleProduct struct {
 	DB *gorm.DB
 }
 
+func NewRepositorySaleProduct(db *gorm.DB) *RepositorySaleProduct {
+	return &RepositorySaleProduct{DB: db}
+}
+
 func (r *RepositorySaleProduct) Create(saleProduct entity.EntitySaleProduct) (*entity.EntitySaleProduct, error) {
 	err := r.DB.Create(&saleProduct).Error
 	if err != nil {
@@ -48,15 +52,15 @@ func (r *RepositorySaleProduct) Update(saleProduct entity.EntitySaleProduct) (*e
 	return &saleProduct, nil
 }
 
-func (r *RepositorySaleProduct) Delete(store_id string, sale_id string, id string) (*entity.EntitySaleProduct, error) {
+func (r *RepositorySaleProduct) Delete(store_id string, sale_id string, id string) error {
 	var saleProduct entity.EntitySaleProduct
 	saleProducts, err := r.GetAll(store_id, sale_id)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	err = r.DB.Where("id =?", id).Find(&saleProducts).Delete(&saleProduct).Error
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return &saleProduct, nil
+	return nil
 }

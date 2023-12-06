@@ -9,12 +9,13 @@ import (
 
 type EntityProductPromotion struct {
 	ID         string                   `json:"id" gorm:"primaryKey"`
-	Store      entity_store.EntityStore `json:"store_id" gorm:"foreignKey:StoreID; not null; index:idx_unique" validate:"required"`
+	StoreID    string                   `json:"store_id" gorm:"index:idx_product_promotion_unique" validate:"required"`
+	Store      entity_store.EntityStore `gorm:"not null;" validate:"required"`
 	Type       string                   `json:"type" gorm:"not null" validate:"required"`
 	Percentage float64                  `json:"percentage" gorm:"not null" validate:"required"`
 	StartDate  time.Time                `json:"start_date" gorm:"not null" validate:"required"`
 	EndDate    time.Time                `json:"end_date" gorm:"not null" validate:"required"`
-	Code       string                   `json:"code" gorm:"not null; index:idx_unique"`
+	Code       string                   `json:"code" gorm:"not null; index:idx_product_promotion_unique"`
 }
 
 func GenerateCode(EntityProductPromotion *EntityProductPromotion) {

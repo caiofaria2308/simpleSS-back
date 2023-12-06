@@ -10,9 +10,10 @@ import (
 var validate *validator.Validate = validator.New()
 
 type EntityProductGroup struct {
-	ID    string                   `json:"id" gorm:"primaryKey"`
-	Store entity_store.EntityStore `json:"store_id" gorm:"foreignKey:StoreID; not null; index:idx_unique"`
-	Name  string                   `json:"name" gorm:"not null; index:idx_unique" validate:"required"`
+	ID      string                   `json:"id" gorm:"primaryKey"`
+	StoreID string                   `json:"store_id" gorm:"foreignKey:Store; not null; index:idx_product_group_unique"`
+	Store   entity_store.EntityStore `gorm:"not null;"`
+	Name    string                   `json:"name" gorm:"not null; index:idx_product_group_unique" validate:"required"`
 }
 
 func CreateProductGroup(productGroupParams EntityProductGroup) (*EntityProductGroup, error) {

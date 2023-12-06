@@ -3,9 +3,11 @@ package entity
 import "main/utils"
 
 type EntityProductPromotionProduct struct {
-	ID        string                 `json:"id" gorm:"primaryKey"`
-	Product   EntityProduct          `json:"product_id" gorm:"foreignKey:ProductID; not null; index:idx_unique" validate:"required"`
-	Promotion EntityProductPromotion `json:"promotion_id" gorm:"foreignKey:PromotionID; not null; index:idx_unique" validate:"required"`
+	ID          string                 `json:"id" gorm:"primaryKey"`
+	ProductID   string                 `json:"product_id" gorm:"index:idx_product_promotion_product_unique" validate:"required"`
+	Product     EntityProduct          `gorm:"not null" validate:"required"`
+	PromotionID string                 `json:"promotion_id" gorm:"index:idx_product_promotion_product_unique" validate:"required"`
+	Promotion   EntityProductPromotion `gorm:"not null" validate:"required"`
 }
 
 func CreateProductPromotionProduct(productPromotionProductParams EntityProductPromotionProduct) (*EntityProductPromotionProduct, error) {

@@ -10,6 +10,10 @@ type RepositorySale struct {
 	DB *gorm.DB
 }
 
+func NewRepositorySale(db *gorm.DB) *RepositorySale {
+	return &RepositorySale{DB: db}
+}
+
 func (r *RepositorySale) Create(sale entity.EntitySale) (*entity.EntitySale, error) {
 	err := r.DB.Create(&sale).Error
 	if err != nil {

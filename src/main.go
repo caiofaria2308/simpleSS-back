@@ -5,13 +5,15 @@ package main
 // "app/infrastructure/repository"
 // usecase_user "app/usecase/user"
 import (
-	"main/infrastructure/database/drivers"
+	"main/api"
+	database "main/infrastructure/database/drivers"
 )
 
 func main() {
-	database := &drivers.SqliteDatabase{}
+	database := &database.SqliteDatabase{}
 	db := database.ConnectDB()
 	database.RunMigrations(db)
 	database.CreatePermissions(db)
 	database.CreateAdmin(db)
+	api.StartWebServer(db)
 }

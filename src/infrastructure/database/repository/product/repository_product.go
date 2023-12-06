@@ -10,6 +10,10 @@ type RepositoryProduct struct {
 	DB *gorm.DB
 }
 
+func NewRepositoryProduct(db *gorm.DB) *RepositoryProduct {
+	return &RepositoryProduct{DB: db}
+}
+
 func (r *RepositoryProduct) Create(product entity.EntityProduct) (*entity.EntityProduct, error) {
 	err := r.DB.Create(&product).Error
 	if err != nil {

@@ -11,6 +11,10 @@ type RepositoryPermission struct {
 	DB *gorm.DB
 }
 
+func NewRepositoryPermission(db *gorm.DB) *RepositoryPermission {
+	return &RepositoryPermission{DB: db}
+}
+
 func (r *RepositoryPermission) Create(permission entity.EntityPermission) (*entity.EntityPermission, error) {
 	err := r.DB.Create(&permission).Error
 	if err != nil {
@@ -48,4 +52,15 @@ func (r *RepositoryPermission) HasPermission(slug string, user entity.EntityUser
 		return false
 	}
 	return true
+}
+
+func (r *RepositoryPermission) GetByGroupID(group_id string) (*[]entity.EntityPermission, error) {
+	var permissions []entity.EntityPermission
+	err := r.DB.Where(
+		"group_permissions.entity_group_id = ?", group_id).Joins(
+		"JOIN group_permissions ON group_permissions.entity_permission_id = id").Find(&permissions).Error
+	if err != nil {
+		return nil, err
+	}
+	return &permissions, nil
 }

@@ -10,6 +10,10 @@ type RepositoryUser struct {
 	DB *gorm.DB
 }
 
+func NewRepositoryUser(db *gorm.DB) *RepositoryUser {
+	return &RepositoryUser{DB: db}
+}
+
 func (r *RepositoryUser) Create(user entity.EntityUser) (*entity.EntityUser, error) {
 	err := r.DB.Create(&user).Error
 	if err != nil {
@@ -60,4 +64,22 @@ func (r *RepositoryUser) Delete(id string) error {
 		return err
 	}
 	return nil
+}
+
+func (r *RepositoryUser) GetPermissionsByUserID(id string) (*[]entity.EntityPermission, error) {
+	var permissions []entity.EntityPermission
+	rgp := *&RepositoryGroup{DB: r.DB}
+	rpp := *&RepositoryPermission{DB: r.DB}
+	groups, err := rgp.GetUserGroups(id)
+	if err != nil {
+		return nil, err
+	}
+	for _, group := range *groups {
+		temp_permissions, err := rpp.GetByGroupID(group.ID)
+		if err != nil {
+			return nil, err
+		}
+		permissions = append(permissions, *temp_permissions...)
+	}
+	return &permissions, nil
 }

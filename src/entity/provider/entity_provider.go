@@ -11,9 +11,10 @@ var validate *validator.Validate = validator.New()
 
 type EntityProvider struct {
 	ID                string                   `json:"id" gorm:"primaryKey"`
-	Store             entity_store.EntityStore `json:"store_id" gorm:"foreignKey:StoreID; not null; index:idx_unique" validate:"required"`
+	StoreID           string                   `json:"store_id" gorm:"index:idx_provider_unique" validate:"required"`
+	Store             entity_store.EntityStore `gorm:"not null;"`
 	SocialReason      string                   `json:"social_reason" validate:"required" gorm:"not null"`
-	CNPJ              string                   `json:"cnpj" validate:"required" gorm:"not null; index:idx_unique"`
+	CNPJ              string                   `json:"cnpj" validate:"required" gorm:"not null; index:idx_provider_unique"`
 	BusinessName      string                   `json:"business_name" validate:"required" gorm:"not null"`
 	AddressState      string                   `json:"address_state"`
 	AddressCity       string                   `json:"address_city"`

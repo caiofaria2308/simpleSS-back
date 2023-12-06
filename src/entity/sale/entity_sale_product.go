@@ -6,14 +6,17 @@ import (
 )
 
 type EntitySaleProduct struct {
-	ID        string                                `json:"id" gorm:"primaryKey"`
-	Sale      EntitySale                            `json:"sale_id" gorm:"foreignKey:SaleID; not null" validate:"required"`
-	Product   entity_product.EntityProduct          `json:"product_id" gorm:"foreignKey:ProductID; not null" validate:"required"`
-	Promotion entity_product.EntityProductPromotion `json:"promotion_id" gorm:"foreignKey:PromotionID"`
-	Quantity  float64                               `json:"quantity" gorm:"not null" validate:"required"`
-	FullPrice float64                               `json:"full_price" gorm:"not null"`
-	Discount  float64                               `json:"discount" gorm:"not null; default: 0.0"`
-	Price     float64                               `json:"price" gorm:"not null"`
+	ID          string                       `json:"id" gorm:"primaryKey"`
+	SaleID      string                       `json:"sale_id" validate:"required"`
+	Sale        EntitySale                   `gorm:"not null"`
+	ProductID   string                       `json:"product_id" validate:"required"`
+	Product     entity_product.EntityProduct `gorm:"not null"`
+	PromotionID string                       `json:"promotion_id"`
+	Promotion   entity_product.EntityProductPromotion
+	Quantity    float64 `json:"quantity" gorm:"not null" validate:"required"`
+	FullPrice   float64 `json:"full_price" gorm:"not null"`
+	Discount    float64 `json:"discount" gorm:"not null; default: 0.0"`
+	Price       float64 `json:"price" gorm:"not null"`
 }
 
 func CalculatePrice(saleProduct *EntitySaleProduct) {

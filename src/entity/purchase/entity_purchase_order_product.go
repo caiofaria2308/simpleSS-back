@@ -7,8 +7,10 @@ import (
 
 type EntityPurchaseOrderProduct struct {
 	ID                 string                       `json:"id" gorm:"primaryKey"`
-	Order              EntityPurchaseOrder          `json:"order_id" gorm:"foreignKey:OrderID; not null"`
-	Product            entity_product.EntityProduct `json:"product_id" gorm:"foreignKey:ProductID; not null"`
+	OrderID            string                       `json:"order_id" validate:"required"`
+	Order              EntityPurchaseOrder          `gorm:"not null"`
+	ProductID          string                       `json:"product_id" validate:"required"`
+	Product            entity_product.EntityProduct `gorm:"not null"`
 	FullPrice          float64                      `json:"price" gorm:"not null" validate:"required"`
 	DiscountPercentage float64                      `json:"discount_percentage" gorm:"not null; default: 0.0"`
 	Quantity           float64                      `json:"quantity" gorm:"not null" validate:"required"`

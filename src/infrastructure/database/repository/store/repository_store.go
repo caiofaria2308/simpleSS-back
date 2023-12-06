@@ -10,6 +10,10 @@ type RepositoryStore struct {
 	DB *gorm.DB
 }
 
+func NewRepositoryStore(db *gorm.DB) *RepositoryStore {
+	return &RepositoryStore{DB: db}
+}
+
 func (r *RepositoryStore) Create(store entity.EntityStore) (*entity.EntityStore, error) {
 	err := r.DB.Create(&store).Error
 	if err != nil {
