@@ -36,6 +36,7 @@ func (s *UseCasePurchaseOrder) FilterByEmployee(store_id string, employee string
 
 func (s *UseCasePurchaseOrder) Create(purchaseOrder entity.EntityPurchaseOrder) (*entity.EntityPurchaseOrder, error) {
 	err := purchaseOrder.Validate()
+	err = entity.CreatePurchaseOrder(&purchaseOrder)
 	if err != nil {
 		return nil, err
 	}
@@ -44,6 +45,7 @@ func (s *UseCasePurchaseOrder) Create(purchaseOrder entity.EntityPurchaseOrder) 
 
 func (s *UseCasePurchaseOrder) Update(purchaseOrder entity.EntityPurchaseOrder) (*entity.EntityPurchaseOrder, error) {
 	err := purchaseOrder.Validate()
+	err = entity.UpdatePurchaseOrder(&purchaseOrder)
 	if err != nil {
 		return nil, err
 	}

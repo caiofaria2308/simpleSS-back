@@ -20,6 +20,7 @@ func (s *UseCasePurchaseOrderProduct) GetByID(store_id string, purchaseOrderID s
 
 func (s *UseCasePurchaseOrderProduct) Create(purchaseOrderProduct entity.EntityPurchaseOrderProduct) (*entity.EntityPurchaseOrderProduct, error) {
 	err := purchaseOrderProduct.Validate()
+	err = entity.CreatePurchaseOrderProduct(&purchaseOrderProduct)
 	if err != nil {
 		return nil, err
 	}
@@ -28,6 +29,7 @@ func (s *UseCasePurchaseOrderProduct) Create(purchaseOrderProduct entity.EntityP
 
 func (s *UseCasePurchaseOrderProduct) Update(purchaseOrderProduct entity.EntityPurchaseOrderProduct) (*entity.EntityPurchaseOrderProduct, error) {
 	err := purchaseOrderProduct.Validate()
+	err = entity.UpdatePurchaseOrderProduct(&purchaseOrderProduct)
 	if err != nil {
 		return nil, err
 	}

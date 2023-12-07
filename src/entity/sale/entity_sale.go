@@ -27,6 +27,7 @@ type EntitySale struct {
 
 func CreateSale(saleParams *EntitySale) error {
 	saleParams.ID = utils.GenerateID()
+	saleParams.Date = time.Now()
 	saleParams.Number = utils.GenerateNumber(time.Now())
 	saleParams.CreatedAt = time.Now()
 	saleParams.UpdatedAt = time.Now()

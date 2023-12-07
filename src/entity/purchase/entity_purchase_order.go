@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"errors"
 	entity_provider "main/entity/provider"
 	entity_store "main/entity/store"
 	"main/utils"
@@ -22,20 +21,22 @@ type EntityPurchaseOrder struct {
 	Provider   entity_provider.EntityProvider   `gorm:"not null;"`
 	EmployeeID string                           `json:"employee_id" validate:"required"`
 	Employee   entity_store.EntityStoreEmployee `gorm:"not null;"`
+	CreatedAt  time.Time                        `json:"created_at"`
+	UpdatedAt  time.Time                        `json:"updated_at"`
 }
 
-func CreatePurchaseOrder(purchaseOrderParams EntityPurchaseOrder) (*EntityPurchaseOrder, error) {
-	if entity_store.VerifyStoreEmployeeIsActive(&purchaseOrderParams.Employee) == false {
-		return nil, errors.New("Employee is not active")
-	}
-	p := &EntityPurchaseOrder{
-		ID:       utils.GenerateID(),
-		Number:   utils.GenerateNumber(purchaseOrderParams.Date),
-		Store:    purchaseOrderParams.Store,
-		Date:     purchaseOrderParams.Date,
-		Provider: purchaseOrderParams.Provider,
-	}
-	return p, nil
+func CreatePurchaseOrder(purchaseOrderParams *EntityPurchaseOrder) error {
+	purchaseOrderParams.ID = utils.GenerateID()
+	purchaseOrderParams.Date = time.Now()
+	purchaseOrderParams.Number = utils.GenerateNumber(time.Now())
+	purchaseOrderParams.CreatedAt = time.Now()
+	purchaseOrderParams.UpdatedAt = time.Now()
+	return nil
+}
+
+func UpdatePurchaseOrder(purchaseOrderParams *EntityPurchaseOrder) error {
+	purchaseOrderParams.UpdatedAt = time.Now()
+	return nil
 }
 
 func (p *EntityPurchaseOrder) Validate() error {

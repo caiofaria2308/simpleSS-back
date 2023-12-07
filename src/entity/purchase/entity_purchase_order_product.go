@@ -3,6 +3,7 @@ package entity
 import (
 	entity_product "main/entity/product"
 	"main/utils"
+	"time"
 )
 
 type EntityPurchaseOrderProduct struct {
@@ -14,18 +15,20 @@ type EntityPurchaseOrderProduct struct {
 	FullPrice          float64                      `json:"price" gorm:"not null" validate:"required"`
 	DiscountPercentage float64                      `json:"discount_percentage" gorm:"not null; default: 0.0"`
 	Quantity           float64                      `json:"quantity" gorm:"not null" validate:"required"`
+	CreatedAt          time.Time                    `json:"created_at"`
+	UpdatedAt          time.Time                    `json:"updated_at"`
 }
 
-func CreatePurchaseOrderProduct(purchaseOrderProductParams EntityPurchaseOrderProduct) (*EntityPurchaseOrderProduct, error) {
-	p := &EntityPurchaseOrderProduct{
-		ID:                 utils.GenerateID(),
-		Order:              purchaseOrderProductParams.Order,
-		Product:            purchaseOrderProductParams.Product,
-		FullPrice:          purchaseOrderProductParams.FullPrice,
-		DiscountPercentage: purchaseOrderProductParams.DiscountPercentage,
-		Quantity:           purchaseOrderProductParams.Quantity,
-	}
-	return p, nil
+func CreatePurchaseOrderProduct(purchaseOrderProductParams *EntityPurchaseOrderProduct) error {
+	purchaseOrderProductParams.ID = utils.GenerateID()
+	purchaseOrderProductParams.CreatedAt = time.Now()
+	purchaseOrderProductParams.UpdatedAt = time.Now()
+	return nil
+}
+
+func UpdatePurchaseOrderProduct(purchaseOrderProductParams *EntityPurchaseOrderProduct) error {
+	purchaseOrderProductParams.UpdatedAt = time.Now()
+	return nil
 }
 
 func (p *EntityPurchaseOrderProduct) Validate() error {
