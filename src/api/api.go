@@ -6,6 +6,7 @@ import (
 	"main/api/handlers"
 	handlers_auth "main/api/handlers/auth"
 	handlers_client "main/api/handlers/client"
+	handlers_store "main/api/handlers/store"
 	database "main/infrastructure/database/drivers"
 
 	"github.com/gin-contrib/cors"
@@ -33,7 +34,9 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 
 	handlers.MountSamplesHandlers(r)
 	handlers_auth.MountHandlers(r, db)
-	handlers_client.MountHandlers(r, db)
+	handlers_store.MountStoreChainHandlers(r, db)
+	handlers_store.MountStoreHandlers(r, db)
+	handlers_client.MountClientHandlers(r, db)
 
 	return r
 }

@@ -22,6 +22,7 @@ func (uc *UseCaseStoreChain) GetByID(id string) (*entity.EntityStoreChain, error
 
 func (uc *UseCaseStoreChain) Create(storeChain entity.EntityStoreChain) (*entity.EntityStoreChain, error) {
 	err := storeChain.Validate()
+	err = entity.CreateStoreChain(&storeChain)
 	if err != nil {
 		return nil, err
 	}

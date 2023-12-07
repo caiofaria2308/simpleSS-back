@@ -33,7 +33,7 @@ func AuthenticatedMiddleware(usercase usecase_user.IUsecaseUser) gin.HandlerFunc
 			c.Next()
 		} else {
 			c.JSON(http.StatusUnauthorized, gin.H{
-				"message": "Unauthorized",
+				"message": "Token is invalid or expired",
 			})
 			c.Abort()
 		}

@@ -7,6 +7,9 @@ import (
 func GeneratePermissions() []entity_auth.EntityPermission {
 	var permissions []entity_auth.EntityPermission
 	permissions = append(permissions, generateStorePermissions()...)
+	permissions = append(permissions, generateStoreChainPermissions()...)
+	permissions = append(permissions, generateStoreEmployeePermissions()...)
+
 	return permissions
 }
 

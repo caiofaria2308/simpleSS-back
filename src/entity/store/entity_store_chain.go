@@ -17,14 +17,11 @@ type EntityStoreChain struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-func CreateStoreChain(storeChainParams EntityStoreChain) (*EntityStoreChain, error) {
-	s := &EntityStoreChain{
-		ID:        utils.GenerateID(),
-		Name:      storeChainParams.Name,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-	}
-	return s, nil
+func CreateStoreChain(storeChainParams *EntityStoreChain) error {
+	storeChainParams.ID = utils.GenerateID()
+	storeChainParams.CreatedAt = time.Now()
+	storeChainParams.UpdatedAt = time.Now()
+	return nil
 }
 
 func (s *EntityStoreChain) Validate() error {

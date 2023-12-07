@@ -174,7 +174,7 @@ func (h *ClientHandlers) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Client deleted successfully"})
 }
 
-func MountHandlers(gin *gin.Engine, conn *gorm.DB) {
+func MountClientHandlers(gin *gin.Engine, conn *gorm.DB) {
 	handler := NewClientHandlers(
 		usecase_client.NewService(
 			repository_client.NewRepositoryClient(conn),
