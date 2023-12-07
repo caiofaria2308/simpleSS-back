@@ -37,6 +37,7 @@ func (s *UseCaseProductProduct) Create(product entity.EntityProduct) (*entity.En
 	if err != nil {
 		return nil, err
 	}
+	entity.CreateProduct(&product)
 	return s.repo.Create(product)
 }
 
@@ -45,6 +46,7 @@ func (s *UseCaseProductProduct) Update(product entity.EntityProduct) (*entity.En
 	if err != nil {
 		return nil, err
 	}
+	entity.UpdateProduct(&product)
 	return s.repo.Update(product)
 }
 

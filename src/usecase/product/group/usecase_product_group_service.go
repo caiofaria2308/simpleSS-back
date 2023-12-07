@@ -27,6 +27,7 @@ func (u *UseCaseProductGroup) Create(productGroup entity.EntityProductGroup) (*e
 	if err != nil {
 		return nil, err
 	}
+	entity.CreateProductGroup(&productGroup)
 	return u.repo.Create(productGroup)
 }
 
@@ -35,6 +36,7 @@ func (u *UseCaseProductGroup) Update(productGroup entity.EntityProductGroup) (*e
 	if err != nil {
 		return nil, err
 	}
+	entity.UpdateProductGroup(&productGroup)
 	return u.repo.Update(productGroup)
 }
 

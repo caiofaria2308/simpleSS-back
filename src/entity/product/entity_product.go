@@ -3,6 +3,7 @@ package entity
 import (
 	entity_store "main/entity/store"
 	"main/utils"
+	"time"
 )
 
 type EntityProduct struct {
@@ -15,19 +16,20 @@ type EntityProduct struct {
 	Name        string                   `json:"name" gorm:"not null" validate:"required"`
 	Price       float64                  `json:"price" gorm:"not null" validate:"required"`
 	MaxDiscount float64                  `json:"max_discount" gorm:"not null; default:0.0" validate:"required"`
+	CreatedAt   time.Time                `json:"created_at"`
+	UpdatedAt   time.Time                `json:"updated_at"`
 }
 
-func CreateProduct(productParams EntityProduct) (*EntityProduct, error) {
-	p := &EntityProduct{
-		ID:          utils.GenerateID(),
-		Store:       productParams.Store,
-		Group:       productParams.Group,
-		BarCode:     productParams.BarCode,
-		Name:        productParams.Name,
-		Price:       productParams.Price,
-		MaxDiscount: productParams.MaxDiscount,
-	}
-	return p, nil
+func CreateProduct(productParams *EntityProduct) error {
+	productParams.ID = utils.GenerateID()
+	productParams.CreatedAt = time.Now()
+	productParams.UpdatedAt = time.Now()
+	return nil
+}
+
+func UpdateProduct(productParams *EntityProduct) error {
+	productParams.UpdatedAt = time.Now()
+	return nil
 }
 
 func (p *EntityProduct) Validate() error {

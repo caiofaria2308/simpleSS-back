@@ -16,6 +16,8 @@ type EntityProductPromotion struct {
 	StartDate  time.Time                `json:"start_date" gorm:"not null" validate:"required"`
 	EndDate    time.Time                `json:"end_date" gorm:"not null" validate:"required"`
 	Code       string                   `json:"code" gorm:"not null; index:idx_product_promotion_unique"`
+	CreatedAt  time.Time                `json:"created_at"`
+	UpdatedAt  time.Time                `json:"updated_at"`
 }
 
 func GenerateCode(EntityProductPromotion *EntityProductPromotion) {
@@ -24,20 +26,19 @@ func GenerateCode(EntityProductPromotion *EntityProductPromotion) {
 	return
 }
 
-func CreateProductPromotion(productPromotionParams EntityProductPromotion) (*EntityProductPromotion, error) {
-	p := &EntityProductPromotion{
-		ID:         utils.GenerateID(),
-		Store:      productPromotionParams.Store,
-		Type:       productPromotionParams.Type,
-		Percentage: productPromotionParams.Percentage,
-		StartDate:  productPromotionParams.StartDate,
-		EndDate:    productPromotionParams.EndDate,
-		Code:       productPromotionParams.Code,
-	}
+func CreateProductPromotion(productPromotionParams *EntityProductPromotion) error {
+	productPromotionParams.ID = utils.GenerateID()
+	productPromotionParams.CreatedAt = time.Now()
+	productPromotionParams.UpdatedAt = time.Now()
 	if productPromotionParams.Code == "" {
-		GenerateCode(p)
+		GenerateCode(productPromotionParams)
 	}
-	return p, nil
+	return nil
+}
+
+func UpdateProductPromotion(productPromotionParams *EntityProductPromotion) error {
+	productPromotionParams.UpdatedAt = time.Now()
+	return nil
 }
 
 func (p *EntityProductPromotion) Validate() error {

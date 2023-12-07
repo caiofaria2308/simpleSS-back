@@ -23,6 +23,7 @@ func (s *UseCaseProductPromotion) Create(productPromotion entity.EntityProductPr
 	if err != nil {
 		return nil, err
 	}
+	entity.CreateProductPromotion(&productPromotion)
 	return s.repo.Create(productPromotion)
 }
 
@@ -31,6 +32,7 @@ func (s *UseCaseProductPromotion) Update(productPromotion entity.EntityProductPr
 	if err != nil {
 		return nil, err
 	}
+	entity.UpdateProductPromotion(&productPromotion)
 	return s.repo.Update(productPromotion)
 }
 

@@ -27,6 +27,7 @@ func (s *UseCaseProductStock) Create(productStock entity.EntityProductStock) (*e
 	if err != nil {
 		return nil, err
 	}
+	entity.CreateProductStock(&productStock)
 	return s.repo.Create(productStock)
 }
 

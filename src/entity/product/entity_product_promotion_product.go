@@ -10,13 +10,9 @@ type EntityProductPromotionProduct struct {
 	Promotion   EntityProductPromotion `gorm:"not null" validate:"required"`
 }
 
-func CreateProductPromotionProduct(productPromotionProductParams EntityProductPromotionProduct) (*EntityProductPromotionProduct, error) {
-	p := &EntityProductPromotionProduct{
-		ID:        utils.GenerateID(),
-		Product:   productPromotionProductParams.Product,
-		Promotion: productPromotionProductParams.Promotion,
-	}
-	return p, nil
+func CreateProductPromotionProduct(productPromotionProductParams *EntityProductPromotionProduct) error {
+	productPromotionProductParams.ID = utils.GenerateID()
+	return nil
 }
 
 func (p *EntityProductPromotionProduct) Validate() error {
