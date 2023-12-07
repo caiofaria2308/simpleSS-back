@@ -13,6 +13,7 @@ type EntityPermission struct {
 
 func CreatePermission(permissionParams *EntityPermission) error {
 	permissionParams.ID = utils.GenerateID()
+	permissionParams.Slug = utils.GenerateSlug(permissionParams.Table + " " + permissionParams.Name)
 	return nil
 }
 

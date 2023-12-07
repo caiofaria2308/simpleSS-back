@@ -10,6 +10,7 @@ func GeneratePermissions() []entity_auth.EntityPermission {
 	permissions = append(permissions, generateProductPromotionPermissions()...)
 	permissions = append(permissions, generateProductPermissions()...)
 	permissions = append(permissions, generateProductStockPermissions()...)
+	permissions = append(permissions, generateProductPromotionProductPermissions()...)
 	return permissions
 }
 
@@ -27,4 +28,8 @@ func generateProductPermissions() []entity_auth.EntityPermission {
 
 func generateProductStockPermissions() []entity_auth.EntityPermission {
 	return entity_auth.GenerateGenericPermissions("entity_product_stock")
+}
+
+func generateProductPromotionProductPermissions() []entity_auth.EntityPermission {
+	return entity_auth.GenerateGenericPermissions("entity_product_promotion_product")
 }
