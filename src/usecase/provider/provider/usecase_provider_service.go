@@ -20,6 +20,7 @@ func (s *UseCaseProvider) GetByID(store_id string, id string) (*entity.EntityPro
 
 func (s *UseCaseProvider) Create(provider entity.EntityProvider) (*entity.EntityProvider, error) {
 	err := provider.Validate()
+	err = entity.CreateProvider(&provider)
 	if err != nil {
 		return nil, err
 	}
@@ -28,6 +29,7 @@ func (s *UseCaseProvider) Create(provider entity.EntityProvider) (*entity.Entity
 
 func (s *UseCaseProvider) Update(provider entity.EntityProvider) (*entity.EntityProvider, error) {
 	err := provider.Validate()
+	err = entity.UpdateProvider(&provider)
 	if err != nil {
 		return nil, err
 	}

@@ -20,6 +20,7 @@ func (s *UseCaseClient) GetByID(store_id string, id string) (*entity.EntityClien
 
 func (s *UseCaseClient) Create(client entity.EntityClient) (*entity.EntityClient, error) {
 	err := client.Validate()
+	err = entity.CreateClient(&client)
 	if err != nil {
 		return nil, err
 	}
@@ -28,6 +29,7 @@ func (s *UseCaseClient) Create(client entity.EntityClient) (*entity.EntityClient
 
 func (s *UseCaseClient) Update(client entity.EntityClient) (*entity.EntityClient, error) {
 	err := client.Validate()
+	err = entity.UpdateClient(&client)
 	if err != nil {
 		return nil, err
 	}

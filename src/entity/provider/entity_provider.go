@@ -3,6 +3,7 @@ package entity
 import (
 	entity_store "main/entity/store"
 	"main/utils"
+	"time"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -22,23 +23,20 @@ type EntityProvider struct {
 	AddressStreet     string                   `json:"address_street"`
 	AddressNumber     string                   `json:"address_number"`
 	AddressComplement string                   `json:"address_complement"`
+	CreatedAt         time.Time                `json:"created_at"`
+	UpdatedAt         time.Time                `json:"updated_at"`
 }
 
-func CreateProvider(providerParams EntityProvider) (*EntityProvider, error) {
-	provider := &EntityProvider{
-		ID:                utils.GenerateID(),
-		CNPJ:              providerParams.CNPJ,
-		SocialReason:      providerParams.SocialReason,
-		BusinessName:      providerParams.BusinessName,
-		AddressState:      providerParams.AddressState,
-		AddressCity:       providerParams.AddressCity,
-		AddressZipCode:    providerParams.AddressZipCode,
-		AddressStreet:     providerParams.AddressStreet,
-		AddressNumber:     providerParams.AddressNumber,
-		AddressComplement: providerParams.AddressComplement,
-	}
+func CreateProvider(providerParams *EntityProvider) error {
+	providerParams.ID = utils.GenerateID()
+	providerParams.CreatedAt = time.Now()
+	providerParams.UpdatedAt = time.Now()
+	return nil
+}
 
-	return provider, nil
+func UpdateProvider(providerParams *EntityProvider) error {
+	providerParams.UpdatedAt = time.Now()
+	return nil
 }
 
 func (p *EntityProvider) Validate() error {
