@@ -14,16 +14,16 @@ type EntityGroup struct {
 	UpdatedAt   time.Time          `json:"updated_at"`
 }
 
-func CreateGroup(groupParams EntityGroup) (*EntityGroup, error) {
-	g := &EntityGroup{
-		ID:          utils.GenerateID(),
-		Name:        groupParams.Name,
-		Permissions: groupParams.Permissions,
-		Users:       groupParams.Users,
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
-	}
-	return g, nil
+func CreateGroup(groupParams *EntityGroup) error {
+	groupParams.ID = utils.GenerateID()
+	groupParams.CreatedAt = time.Now()
+	groupParams.UpdatedAt = time.Now()
+	return nil
+}
+
+func UpdateGroup(groupParams *EntityGroup) error {
+	groupParams.UpdatedAt = time.Now()
+	return nil
 }
 
 func (g *EntityGroup) Validate() error {

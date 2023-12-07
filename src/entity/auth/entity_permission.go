@@ -11,15 +11,13 @@ type EntityPermission struct {
 	Slug  string `json:"slug" validate:"required"`
 }
 
-func CreatePermission(permissionParam EntityPermission) (*EntityPermission, error) {
-	slug := utils.GenerateSlug(permissionParam.Table + " " + permissionParam.Name)
-	u := &EntityPermission{
-		ID:    utils.GenerateID(),
-		Table: permissionParam.Table,
-		Name:  permissionParam.Name,
-		Slug:  slug,
-	}
-	return u, nil
+func CreatePermission(permissionParams *EntityPermission) error {
+	permissionParams.ID = utils.GenerateID()
+	return nil
+}
+
+func UpdatePermission(permissionParams *EntityPermission) error {
+	return nil
 }
 
 func (u *EntityPermission) Validate() error {

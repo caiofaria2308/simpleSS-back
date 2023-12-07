@@ -12,11 +12,12 @@ func GenerateGenericPermissions(table string) []EntityPermission {
 	var permissions []EntityPermission
 	userCRUD := []string{"create", "list", "read", "update", "delete"}
 	for i := 0; i < len(userCRUD); i++ {
-		permission, _ := CreatePermission(EntityPermission{
+		permission := EntityPermission{
 			Table: table,
 			Name:  userCRUD[i],
-		})
-		permissions = append(permissions, *permission)
+		}
+		CreatePermission(&permission)
+		permissions = append(permissions, permission)
 	}
 	return permissions
 }

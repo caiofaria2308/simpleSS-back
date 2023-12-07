@@ -41,6 +41,7 @@ func (s *UseCaseUser) Create(user entity.EntityUser) (*entity.EntityUser, error)
 	if err != nil {
 		return nil, err
 	}
+	entity.CreateUser(&user)
 	return s.repo.Create(user)
 }
 
@@ -49,6 +50,7 @@ func (s *UseCaseUser) Update(user entity.EntityUser) (*entity.EntityUser, error)
 	if err != nil {
 		return nil, err
 	}
+	entity.UpdateUser(&user)
 	return s.repo.Update(user)
 }
 

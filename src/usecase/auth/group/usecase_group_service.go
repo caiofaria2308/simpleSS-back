@@ -20,6 +20,7 @@ func (s *UseCaseGroup) GetByID(id string) (*entity.EntityGroup, error) {
 
 func (s *UseCaseGroup) Create(group entity.EntityGroup) (*entity.EntityGroup, error) {
 	err := group.Validate()
+	entity.CreateGroup(&group)
 	if err != nil {
 		return nil, err
 	}
@@ -28,6 +29,7 @@ func (s *UseCaseGroup) Create(group entity.EntityGroup) (*entity.EntityGroup, er
 
 func (s *UseCaseGroup) Update(group entity.EntityGroup) (*entity.EntityGroup, error) {
 	err := group.Validate()
+	entity.UpdateGroup(&group)
 	if err != nil {
 		return nil, err
 	}

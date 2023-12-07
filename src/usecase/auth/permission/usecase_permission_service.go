@@ -11,6 +11,12 @@ func NewService(repository IRepositoryPermission) *UseCasePermission {
 }
 
 func (s *UseCasePermission) Create(permission entity.EntityPermission) (*entity.EntityPermission, error) {
+	err := permission.Validate()
+	if err != nil {
+		return nil, err
+	}
+	entity.CreatePermission(&permission)
+
 	return s.repo.CreatePermission(permission)
 }
 

@@ -29,23 +29,16 @@ type EntityUser struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-func CreateUser(userParam EntityUser) (*EntityUser, error) {
-	now := time.Now()
-	var password string
-	var err error
+func CreateUser(userParams *EntityUser) error {
+	userParams.ID = utils.GenerateID()
+	userParams.CreatedAt = time.Now()
+	userParams.UpdatedAt = time.Now()
+	return nil
+}
 
-	password, err = utils.GeneratePassword(userParam.Password)
-	if err != nil {
-		return nil, err
-	}
-	u := &EntityUser{
-		ID:        utils.GenerateID(),
-		Name:      userParam.Name,
-		Password:  password,
-		CreatedAt: now,
-		UpdatedAt: now,
-	}
-	return u, nil
+func UpdateUser(userParams *EntityUser) error {
+	userParams.UpdatedAt = time.Now()
+	return nil
 }
 
 func (u *EntityUser) ValidatePassword(p string) error {

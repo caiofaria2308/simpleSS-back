@@ -90,13 +90,14 @@ func (a *AbstractDatabase) CreateAdmin(db *gorm.DB) {
 		fmt.Println(err)
 	}
 	if group == nil {
-		group, err = entity_auth.CreateGroup(entity_auth.EntityGroup{
+		gp := entity_auth.EntityGroup{
 			Name: "Super Group",
-		})
+		}
+		err = entity_auth.CreateGroup(&gp)
 		if err != nil {
 			fmt.Println(err)
 		}
-		repoGroup.Create(*group)
+		repoGroup.Create(gp)
 	}
 	fmt.Println("Admin group created")
 
@@ -107,12 +108,13 @@ func (a *AbstractDatabase) CreateAdmin(db *gorm.DB) {
 		fmt.Println(err)
 	}
 	if user == nil {
-		user, err = entity_auth.CreateUser(entity_auth.EntityUser{
+		admin := entity_auth.EntityUser{
 			Email:    os.Getenv("DEFAULT_ADMIN_EMAIL"),
 			Name:     "Admin",
 			Password: os.Getenv("DEFAULT_ADMIN_PASSWORD"),
-		})
-		repoUser.Create(*user)
+		}
+		err = entity_auth.CreateUser(&admin)
+		repoUser.Create(admin)
 	}
 	fmt.Println("Admin user created")
 	fmt.Println("Creating admin permissions...")
