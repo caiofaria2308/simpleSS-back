@@ -31,6 +31,7 @@ func (uc *UseCaseStoreChain) Create(storeChain entity.EntityStoreChain) (*entity
 
 func (uc *UseCaseStoreChain) Update(storeChain entity.EntityStoreChain) (*entity.EntityStoreChain, error) {
 	err := storeChain.Validate()
+	err = entity.UpdateStoreChain(&storeChain)
 	if err != nil {
 		return nil, err
 	}

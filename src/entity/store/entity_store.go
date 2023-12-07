@@ -22,23 +22,16 @@ type EntityStore struct {
 	UpdatedAt         time.Time        `json:"updated_at"`
 }
 
-func CreateStore(storeParams EntityStore) (*EntityStore, error) {
-	s := &EntityStore{
-		ID:                utils.GenerateID(),
-		CNPJ:              storeParams.CNPJ,
-		Chain:             storeParams.Chain,
-		SocialReason:      storeParams.SocialReason,
-		BusinessName:      storeParams.BusinessName,
-		AddressState:      storeParams.AddressState,
-		AddressCity:       storeParams.AddressCity,
-		AddressZipCode:    storeParams.AddressZipCode,
-		AddressStreet:     storeParams.AddressStreet,
-		AddressNumber:     storeParams.AddressNumber,
-		AddressComplement: storeParams.AddressComplement,
-		CreatedAt:         time.Now(),
-		UpdatedAt:         time.Now(),
-	}
-	return s, nil
+func CreateStore(storeParams *EntityStore) error {
+	storeParams.ID = utils.GenerateID()
+	storeParams.CreatedAt = time.Now()
+	storeParams.UpdatedAt = time.Now()
+	return nil
+}
+
+func UpdateStore(storeParams *EntityStore) error {
+	storeParams.UpdatedAt = time.Now()
+	return nil
 }
 
 func (s *EntityStore) Validate() error {

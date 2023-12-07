@@ -20,6 +20,7 @@ func (s *UseCaseStore) GetByID(chain_id string, id string) (*entity.EntityStore,
 
 func (s *UseCaseStore) Create(store entity.EntityStore) (*entity.EntityStore, error) {
 	err := store.Validate()
+	err = entity.CreateStore(&store)
 	if err != nil {
 		return nil, err
 	}
@@ -28,6 +29,7 @@ func (s *UseCaseStore) Create(store entity.EntityStore) (*entity.EntityStore, er
 
 func (s *UseCaseStore) Update(store entity.EntityStore) (*entity.EntityStore, error) {
 	err := store.Validate()
+	err = entity.UpdateStore(&store)
 	if err != nil {
 		return nil, err
 	}

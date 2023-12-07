@@ -24,6 +24,11 @@ func CreateStoreChain(storeChainParams *EntityStoreChain) error {
 	return nil
 }
 
+func UpdateStoreChain(storeChainParams *EntityStoreChain) error {
+	storeChainParams.UpdatedAt = time.Now()
+	return nil
+}
+
 func (s *EntityStoreChain) Validate() error {
 	return validate.Struct(s)
 }
