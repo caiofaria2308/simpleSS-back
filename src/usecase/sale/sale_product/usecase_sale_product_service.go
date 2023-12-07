@@ -20,6 +20,7 @@ func (s *UseCaseSaleProduct) GetByID(store_id string, sale_id string, id string)
 
 func (s *UseCaseSaleProduct) Create(saleProduct entity.EntitySaleProduct) (*entity.EntitySaleProduct, error) {
 	err := saleProduct.Validate()
+	err = entity.CreateSaleProduct(&saleProduct)
 	if err != nil {
 		return nil, err
 	}
@@ -28,6 +29,7 @@ func (s *UseCaseSaleProduct) Create(saleProduct entity.EntitySaleProduct) (*enti
 
 func (s *UseCaseSaleProduct) Update(saleProduct entity.EntitySaleProduct) (*entity.EntitySaleProduct, error) {
 	err := saleProduct.Validate()
+	err = entity.UpdateSaleProduct(&saleProduct)
 	if err != nil {
 		return nil, err
 	}

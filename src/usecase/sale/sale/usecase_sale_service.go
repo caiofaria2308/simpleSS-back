@@ -36,6 +36,7 @@ func (s *UseCaseSale) FilterByClient(store_id string, client_id string) (sales [
 
 func (s *UseCaseSale) Create(sale entity.EntitySale) (*entity.EntitySale, error) {
 	err := sale.Validate()
+	err = entity.CreateSale(&sale)
 	if err != nil {
 		return nil, err
 	}
@@ -44,6 +45,7 @@ func (s *UseCaseSale) Create(sale entity.EntitySale) (*entity.EntitySale, error)
 
 func (s *UseCaseSale) Update(sale entity.EntitySale) (*entity.EntitySale, error) {
 	err := sale.Validate()
+	err = entity.UpdateSale(&sale)
 	if err != nil {
 		return nil, err
 	}

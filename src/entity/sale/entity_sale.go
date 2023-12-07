@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"errors"
 	entity_client "main/entity/client"
 	entity_store "main/entity/store"
 	"main/utils"
@@ -22,21 +21,21 @@ type EntitySale struct {
 	Client     entity_client.EntityClient
 	EmployeeID string                           `json:"employee_id" validate:"required"`
 	Employee   entity_store.EntityStoreEmployee `gorm:"not null;"`
+	CreatedAt  time.Time                        `json:"created_at"`
+	UpdatedAt  time.Time                        `json:"updated_at"`
 }
 
-func CreateSale(saleParams EntitySale) (*EntitySale, error) {
-	if entity_store.VerifyStoreEmployeeIsActive(&saleParams.Employee) == false {
-		return nil, errors.New("Employee is not active")
-	}
-	s := &EntitySale{
-		ID:       utils.GenerateID(),
-		Number:   utils.GenerateNumber(saleParams.Date),
-		Date:     saleParams.Date,
-		Store:    saleParams.Store,
-		Client:   saleParams.Client,
-		Employee: saleParams.Employee,
-	}
-	return s, nil
+func CreateSale(saleParams *EntitySale) error {
+	saleParams.ID = utils.GenerateID()
+	saleParams.Number = utils.GenerateNumber(time.Now())
+	saleParams.CreatedAt = time.Now()
+	saleParams.UpdatedAt = time.Now()
+	return nil
+}
+
+func UpdateSale(saleParams *EntitySale) error {
+	saleParams.UpdatedAt = time.Now()
+	return nil
 }
 
 func (s *EntitySale) Validate() error {
